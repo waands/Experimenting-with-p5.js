@@ -1,10 +1,16 @@
 let particles = [];
-const num = 2000;
-
+let num;
 const noiseScale = 0.01;
 
 function setup() {
-  createCanvas(800,800);
+  particlesSlider = createButton("Particles number");
+  particlesNumber = createSlider(50,5000,5000,1);
+  particlesNumber.input(updateSliderValue); // Chama a função updateSliderValue quando o slider é alterado
+
+  createCanvas(600,600);
+
+  num = particlesNumber.value();
+
   for(let i = 0; i < num; i++){
     particles.push(createVector(random(width), random(height)))
   }
@@ -12,7 +18,9 @@ function setup() {
 }
 
 function draw(){
+
   background(0, 10);
+  num = particlesNumber.value();
   for(let i = 0; i < num; i++){
     let p = particles[i];
     point(p.x, p.y);
@@ -25,6 +33,11 @@ function draw(){
       p.y = random(height);
     }
   }
+}
+
+function updateSliderValue() {
+  num = particlesNumber.value();
+  document.getElementById('sliderValue').innerText = `Quantidade de partículas: ${num}`; // Atualiza o valor do <p> com o valor do slider
 }
 
 function mouseReleased(){
